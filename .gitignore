@@ -1,0 +1,12 @@
+# root dependencies
+node_modules
+
+# server
+server/node_modules
+server/.env
+
+# production
+dist
+
+# OS files
+.DS_Store
