@@ -1,15 +1,12 @@
-# root dependencies
-node_modules
+# Dependencies
+node_modules/
 
-# client
-client/node_modules
-
-# server
-server/node_modules
+# Environment variables
+.env
 server/.env
 
-# production
-dist
+# Build output
+dist/
 
-# OS files
+# OS / editor files
 .DS_Store
