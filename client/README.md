@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+## Application Architecture
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project follows a full-stack architecture:
 
-## Available Scripts
+- **Frontend:** React (Client)
+- **Backend:** Express + Node.js (Server)
+- **Database:** MySQL (Relational)
 
-In the project directory, you can run:
+The Express API processes HTTP requests from the React frontend, performing CRUD operations on a MySQL database where foreign key constraints enforce referential integrity across tables.
 
-### `npm start`
+## Database Schema (MySQL)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The application uses four primary relational tables:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `users`
+- `categories`
+- `questions`
+- `answers`
 
-### `npm test`
+### Users Table
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+CREATE TABLE `users` (
+  `userID` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-### `npm run build`
+### Categories Table
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+CREATE TABLE `categories` (
+  `categoryID` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`categoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Questions Table
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+CREATE TABLE `questions` (
+  `questionID` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `userID` int NOT NULL,
+  `categoryID` int NOT NULL,
+  PRIMARY KEY (`questionID`),
+  KEY `userID` (`userID`),
+  KEY `categoryID` (`categoryID`),
+  CONSTRAINT `questions_ibfk_1`
+    FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+  CONSTRAINT `questions_ibfk_2`
+    FOREIGN KEY (`categoryID`) REFERENCES `categories` (`categoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Answers Table
+CREATE TABLE `answers` (
+  `answerID` int NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `questionID` int NOT NULL,
+  `userID` int NOT NULL,
+  PRIMARY KEY (`answerID`),
+  KEY `questionID` (`questionID`),
+  KEY `userID` (`userID`),
+  CONSTRAINT `answers_ibfk_1`
+    FOREIGN KEY (`questionID`) REFERENCES `questions` (`questionID`),
+  CONSTRAINT `answers_ibfk_2`
+    FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
