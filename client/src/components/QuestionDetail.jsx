@@ -1,44 +1,66 @@
-//Show single question + answers + form
-import React, { useEffect, useState } from "react";
-import { getQuestionById } from "../api";
+// client/src/components/QuestionDetail.jsx
+import React, { useState, useEffect } from "react";
+import { getQuestionWithAnswers } from "../api";
 import AnswerForm from "./AnswerForm";
 
-export default function QuestionDetail({ questionID }) {
+export default function QuestionDetail({ questionID, userID }) {
   const [question, setQuestion] = useState(null);
-  const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const fetchData = () => {
-    getQuestionById(questionID)
-      .then(res => {
-        setQuestion(res.data.question);
-        setAnswers(res.data.answers);
-      })
-      .catch(err => console.error(err));
+  // Fetch question and answers whenever questionID changes
+  useEffect(() => {
+    if (!questionID) return;
+
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const data = await getQuestionWithAnswers(questionID);
+        setQuestion(data);
+      } catch (err) {
+        console.error("Error fetching question details:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [questionID]); // ✅ Only re-run when questionID changes
+
+  // Refresh answers after posting
+  const handleAnswerAdded = async () => {
+    try {
+      const data = await getQuestionWithAnswers(questionID);
+      setQuestion(data);
+    } catch (err) {
+      console.error("Error refreshing answers:", err);
+    }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [questionID]);
-
-  if (!question) return <div>Loading...</div>;
+  if (loading) return <p>Loading question...</p>;
+  if (!question) return <p>Question not found.</p>;
 
   return (
     <div>
       <h2>{question.title}</h2>
-      <p>Category: {question.category}</p>
-      <p>Asked by: {question.username}</p>
+      <h3>Answers:</h3>
+      {question.answers && question.answers.length > 0 ? (
+        <ul>
+          {question.answers.map((ans) => (
+            <li key={ans.answerID}>
+              <strong>{ans.username}:</strong> {ans.content}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No answers yet. Be the first to answer!</p>
+      )}
 
-      <h3>Answers</h3>
-      {answers.length === 0 ? <p>No answers yet</p> : null}
-      <ul>
-        {answers.map(a => (
-          <li key={a.answerID}>
-            {a.content} — <i>{a.username}</i>
-          </li>
-        ))}
-      </ul>
-
-      <AnswerForm questionID={questionID} onAnswerAdded={fetchData} />
+      {/* Answer form */}
+      <AnswerForm
+        questionID={questionID}
+        userID={userID}             // Pass logged-in user
+        onAnswerAdded={handleAnswerAdded}
+      />
     </div>
   );
 }

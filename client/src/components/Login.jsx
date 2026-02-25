@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { login } from "../api";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -8,20 +8,19 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      const res = await axios.post("http://localhost:4000/login", { username, password });
-      onLogin(res.data); 
-      setError("");
+      const user = await login(username, password);
+      onLogin(user); // Send user to App.jsx
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError("Invalid username or password");
     }
   };
 
   return (
     <div>
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -30,6 +29,7 @@ export default function Login({ onLogin }) {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+        <br />
         <input
           type="password"
           placeholder="Password"
@@ -37,8 +37,11 @@ export default function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <br />
         <button type="submit">Login</button>
       </form>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

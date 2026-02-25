@@ -2,7 +2,32 @@ import axios from "axios";
 
 const API_BASE = "http://localhost:4000/api";
 
-export const getQuestions = () => axios.get(`${API_BASE}/questions`);
-export const getQuestionById = (id) => axios.get(`${API_BASE}/questions/${id}`);
-export const postAnswer = (questionID, content, userID) =>
-  axios.post(`${API_BASE}/questions/${questionID}/answers`, { content, userID });
+// -------------------- AUTH --------------------
+
+export async function login(username, password) {
+  const res = await axios.post(`${API_BASE}/login`, {
+    username,
+    password,
+  });
+  return res.data;
+}
+
+// -------------------- QUESTIONS --------------------
+
+export async function getQuestions() {
+  const res = await axios.get(`${API_BASE}/questions`);
+  return res.data;
+}
+
+export async function getQuestionWithAnswers(questionID) {
+  const res = await axios.get(`${API_BASE}/questions/${questionID}`);
+  return res.data;
+}
+
+export async function postAnswer(questionID, content, userID) {
+  const res = await axios.post(
+    `${API_BASE}/questions/${questionID}/answers`,
+    { content, userID }
+  );
+  return res.data;
+}

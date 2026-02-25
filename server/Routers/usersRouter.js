@@ -3,29 +3,25 @@ import db from "../dbConnection.js";
 
 const router = express.Router();
 
+// POST /login
 router.post("/", async (req, res) => {
+  const { username, password } = req.body;
   try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      return res.status(400).json({ message: "Username and password required" });
-    }
-
     const [rows] = await db.query(
-      "SELECT * FROM users WHERE username = ? AND password = ?",
-      [username, password]  
+      "SELECT userID, username, email FROM users WHERE username = ? AND password = ?",
+      [username, password]
     );
 
     if (rows.length === 0) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    res.json({ userID: rows[0].userID, username: rows[0].username });
-
+    res.json(rows[0]);
   } catch (error) {
-    console.error("Login error:", error);
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
 
+// ✅ Make this the default export
 export default router;

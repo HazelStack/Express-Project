@@ -60,10 +60,7 @@ router.get("/:id", async (req, res) => {
     `, [questionID]);
 
     // 3️⃣ Send combined response
-    res.json({
-      question: questionRows[0],
-      answers: answerRows
-    });
+    res.json({ ...questionRows[0], answers: answerRows })
 
   } catch (error) {
     console.error("Error fetching question:", error);
