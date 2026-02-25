@@ -8,8 +8,10 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-// API routes
-server.use("/api/login", usersRouter);
+// ✅ Auth routes
+server.use("/api", usersRouter);
+
+// ✅ Question routes
 server.use("/api/questions", questionsRouter);
 
 // Root test
