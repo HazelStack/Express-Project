@@ -1,19 +1,17 @@
 //Form to submit a new answer
 import React, { useState } from "react";
 import { postAnswer } from "../api";
-
-export default function AnswerForm({ questionID, onAnswerAdded }) {
+export default function AnswerForm({ questionID, onAnswerAdded, userID }) {
   const [content, setContent] = useState("");
-  const userID = 1; // Hardcoded for now, replace with logged-in user later
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!content) return;
 
     try {
-      await postAnswer(questionID, content, userID);
+      await postAnswer(questionID, content, userID); 
       setContent("");
-      onAnswerAdded(); // Refresh answers
+      onAnswerAdded();
     } catch (err) {
       console.error(err);
     }
