@@ -1,43 +1,44 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import QuestionList from "./components/QuestionList";
 import QuestionDetail from "./components/QuestionDetail";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [showRegister, setShowRegister] = useState(false);
   const [selectedQuestionID, setSelectedQuestionID] = useState(null);
 
-  const handleLogout = () => {
-    setUser(null);
-    setSelectedQuestionID(null);
-  };
-
   if (!user) {
-    return <Login onLogin={setUser} />;
+    return showRegister ? (
+      <Register
+        onRegister={(newUser) => {
+          setUser(newUser); // auto-login
+          setShowRegister(false);
+        }}
+        onSwitchToLogin={() => setShowRegister(false)}
+      />
+    ) : (
+      <Login
+        onLogin={setUser}
+        onSwitchToRegister={() => setShowRegister(true)}
+      />
+    );
   }
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3>Welcome, {user.username}!</h3>
-        <button onClick={handleLogout}>Logout</button>
+    <div style={{ display: "flex", gap: "2rem" }}>
+      <div style={{ flex: 1 }}>
+        <h3>Welcome, {user.username}</h3>
+        <button onClick={() => setUser(null)}>Logout</button>
+        <QuestionList onSelectQuestion={setSelectedQuestionID} />
       </div>
-
-      <div style={{ display: "flex", gap: "2rem", marginTop: "1rem" }}>
-        <div style={{ flex: 1 }}>
-          <QuestionList onSelectQuestion={setSelectedQuestionID} />
-        </div>
-
-        <div style={{ flex: 2 }}>
-          {selectedQuestionID ? (
-            <QuestionDetail
-              questionID={selectedQuestionID}
-              userID={user.userID}
-            />
-          ) : (
-            <p>Select a question to view details</p>
-          )}
-        </div>
+      <div style={{ flex: 2 }}>
+        {selectedQuestionID ? (
+          <QuestionDetail questionID={selectedQuestionID} userID={user.userID} />
+        ) : (
+          <p>Select a question to view details</p>
+        )}
       </div>
     </div>
   );
