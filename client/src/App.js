@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Layout from "./components/Layout";
 import Categories from "./components/Categories";
 import QuestionList from "./components/QuestionList";
 import QuestionDetail from "./components/QuestionDetail";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,7 +17,7 @@ function App() {
     return showRegister ? (
       <Register
         onRegister={(newUser) => {
-          setUser(newUser); 
+          setUser(newUser);
           setShowRegister(false);
         }}
         onSwitchToLogin={() => setShowRegister(false)}
@@ -29,47 +31,32 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h3>Welcome, {user.username}!</h3>
-        <button
-          onClick={() => {
-            setUser(null);
-            setSelectedCategoryID(null);
-            setSelectedQuestionID(null);
-          }}
-        >
-          Logout
-        </button>
-      </div>
-
-      <div style={{ marginTop: "1rem" }}>
-        {!selectedCategoryID ? (
-          <Categories onSelectCategory={setSelectedCategoryID} />
-        ) : !selectedQuestionID ? (
-          <QuestionList
-            categoryID={selectedCategoryID}
-            onSelectQuestion={setSelectedQuestionID}
-          />
-        ) : (
-          <QuestionDetail
-            questionID={selectedQuestionID}
-            userID={user.userID}
-          />
-        )}
-      </div>
-
-      {selectedQuestionID && (
-        <button onClick={() => setSelectedQuestionID(null)} style={{ marginTop: "1rem" }}>
-          Back to Questions
-        </button>
+    <Layout
+      user={user}
+      onLogout={() => {
+        setUser(null);
+        setSelectedCategoryID(null);
+        setSelectedQuestionID(null);
+      }}
+      onHome={() => {
+        setSelectedCategoryID(null);
+        setSelectedQuestionID(null);
+      }}
+    >
+      {!selectedCategoryID ? (
+        <Categories onSelectCategory={setSelectedCategoryID} />
+      ) : !selectedQuestionID ? (
+        <QuestionList
+          categoryID={selectedCategoryID}
+          onSelectQuestion={setSelectedQuestionID}
+        />
+      ) : (
+        <QuestionDetail
+          questionID={selectedQuestionID}
+          userID={user.userID}
+        />
       )}
-      {!selectedQuestionID && selectedCategoryID && (
-        <button onClick={() => setSelectedCategoryID(null)} style={{ marginTop: "1rem" }}>
-          Back to Categories
-        </button>
-      )}
-    </div>
+    </Layout>
   );
 }
 
