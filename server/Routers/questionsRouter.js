@@ -93,4 +93,29 @@ router.post("/:id/answers", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+// GET /questions/category/:categoryID
+router.get("/category/:categoryID", async (req, res) => {
+  try {
+    const categoryID = req.params.categoryID;
+
+    const [rows] = await db.query(
+      `SELECT 
+         q.questionID,
+         q.title,
+         u.username,
+         c.name AS category
+       FROM questions q
+       JOIN users u ON q.userID = u.userID
+       JOIN categories c ON q.categoryID = c.categoryID
+       WHERE q.categoryID = ?
+       ORDER BY q.questionID DESC`,
+      [categoryID]
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 export default router;

@@ -2,19 +2,17 @@ import express from "express";
 import cors from "cors";
 import usersRouter from "./Routers/usersRouter.js";
 import questionsRouter from "./Routers/questionsRouter.js";
+import categoriesRouter from "./Routers/categoriesRouter.js"
 
 const server = express();
 
 server.use(cors());
 server.use(express.json());
 
-// ✅ Auth routes
 server.use("/api", usersRouter);
-
-// ✅ Question routes
 server.use("/api/questions", questionsRouter);
+server.use("/api/categories", categoriesRouter);
 
-// Root test
 server.get("/", (req, res) => {
   res.send("Server is running");
 });
