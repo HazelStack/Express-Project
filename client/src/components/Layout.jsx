@@ -8,16 +8,16 @@ export default function Layout({ user, onLogout, onHome, children }) {
     <>
       <Navbar style={{ backgroundColor: "#2f5d50" }} variant="dark" expand="lg">
         <Container>
-            <Navbar.Brand href="#" className="d-flex align-items-center">
-                <img
-                src={plantLogo}
-                width="32"
-                height="32"
-                className="me-2"
-                alt="Plant logo"
-                />
-                Botanical Q&A
-            </Navbar.Brand>
+          <Navbar.Brand href="#" className="d-flex align-items-center">
+            <img
+              src={plantLogo}
+              width="32"
+              height="32"
+              className="me-2"
+              alt="Plant logo"
+            />
+            Botanical Q&A
+          </Navbar.Brand>
 
           <Nav className="ms-auto">
             <Nav.Link onClick={onHome}>Categories</Nav.Link>
@@ -25,14 +25,14 @@ export default function Layout({ user, onLogout, onHome, children }) {
               Signed in as: <strong>{user?.username}</strong>
             </Navbar.Text>
             <Nav.Link onClick={onLogout}>Logout</Nav.Link>
-            
           </Nav>
         </Container>
       </Navbar>
-
-      <Container className="mt-4">
-        {children}
-      </Container>
+      <div className="dashboard-page">
+        <Container className="mt-4">
+          {children}
+        </Container>
+      </div>
     </>
   );
 }
