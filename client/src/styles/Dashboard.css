@@ -1,5 +1,6 @@
-/* ===== Dashboard Background ===== */
-.dashboard-page {
+/* ===== Global Dashboard & Category Page ===== */
+.dashboard-page,
+.category-page {
   min-height: 100vh;
   padding: 3rem 1rem;
   background: linear-gradient(
@@ -10,17 +11,19 @@
   );
 }
 
-/* ===== Title ===== */
-.dashboard-title {
+/* ===== Titles ===== */
+.dashboard-title,
+.category-title,
+.question-title {
   text-align: center;
   font-weight: 600;
-  margin-bottom: 3rem;
-  color: #2f5d50;
+  margin-bottom: 2rem;
+  color: #2f5d50; /* dark green */
   font-size: 2rem;
   letter-spacing: 1px;
 }
 
-/* ===== Grid Layout ===== */
+/* ===== Grid Layout for Categories ===== */
 .category-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -29,7 +32,7 @@
   margin: 0 auto;
 }
 
-/* ===== Card Container ===== */
+/* ===== Category Card ===== */
 .category-card {
   position: relative;
   border-radius: 20px;
@@ -38,7 +41,6 @@
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* ===== Image Styling ===== */
 .category-card img {
   width: 100%;
   height: 280px;
@@ -46,7 +48,6 @@
   transition: transform 0.4s ease;
 }
 
-/* ===== Overlay ===== */
 .category-overlay {
   position: absolute;
   inset: 0;
@@ -61,7 +62,6 @@
   text-transform: uppercase;
 }
 
-/* ===== Hover Effects ===== */
 .category-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
@@ -75,13 +75,101 @@
   background: rgba(47, 93, 80, 0.75);
 }
 
+/* ===== Questions Grid ===== */
+.question-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Question Card ===== */
+.question-card {
+  background-color: #ffffffcc; /* semi-transparent white */
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.question-card:hover {
+  transform: translateY(-3px);
+}
+
+.question-user {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== Answers ===== */
+.answers {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 3px solid #2f5d50; /* dark green border */
+}
+
+.answer-card {
+  background-color: #f0f8f0; /* light green */
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.answer-user {
+  font-size: 0.8rem;
+  color: #2f5d50;
+  text-align: right;
+}
+
+/* ===== Answer Form ===== */
+.answer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.answer-input {
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid #2f5d50;
+  resize: vertical;
+  font-size: 1rem;
+}
+
+.answer-btn {
+  align-self: flex-end;
+  padding: 0.5rem 1.25rem;
+  background-color: #2f5d50;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.answer-btn:hover {
+  background-color: #39725f;
+}
+
 /* ===== Mobile Adjustments ===== */
 @media (max-width: 768px) {
-  .dashboard-title {
+  .dashboard-title,
+  .category-title,
+  .question-title {
     font-size: 1.6rem;
   }
 
   .category-card img {
     height: 220px;
+  }
+
+  .question-list {
+    grid-template-columns: 1fr;
   }
 }

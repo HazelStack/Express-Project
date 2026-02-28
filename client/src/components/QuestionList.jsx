@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getQuestionsByCategory } from "../api";
+import "../styles/Dashboard.css"; 
 
 export default function QuestionList({ categoryID, onSelectQuestion }) {
   const [questions, setQuestions] = useState([]);
@@ -10,18 +11,26 @@ export default function QuestionList({ categoryID, onSelectQuestion }) {
   }, [categoryID]);
 
   return (
-    <div>
-      <h2>Questions</h2>
-      {questions.length === 0 && <p>No questions in this category.</p>}
-      <ul>
-        {questions.map((q) => (
-          <li key={q.questionID}>
-            <button onClick={() => onSelectQuestion(q.questionID)}>
-              {q.title} — <i>{q.category}</i>
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="category-page">
+      <h2 className="question-title">🌱 Questions</h2>
+
+      {questions.length === 0 ? (
+        <p style={{ textAlign: "center" }}>No questions in this category.</p>
+      ) : (
+        <div className="question-list">
+          {questions.map((q) => (
+            <div key={q.questionID} className="question-card">
+              <div className="question-user">Category: {q.category}</div>
+              <button
+                className="btn btn-outline-success w-100"
+                onClick={() => onSelectQuestion(q.questionID)}
+              >
+                {q.title}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

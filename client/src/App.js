@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [user, setUser] = useState(null);
   const [showRegister, setShowRegister] = useState(false);
-  const [selectedCategoryID, setSelectedCategoryID] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null); 
   const [selectedQuestionID, setSelectedQuestionID] = useState(null);
 
   if (!user) {
@@ -35,19 +35,20 @@ function App() {
       user={user}
       onLogout={() => {
         setUser(null);
-        setSelectedCategoryID(null);
+        setSelectedCategory(null);
         setSelectedQuestionID(null);
       }}
       onHome={() => {
-        setSelectedCategoryID(null);
+        setSelectedCategory(null);
         setSelectedQuestionID(null);
       }}
     >
-      {!selectedCategoryID ? (
-        <Categories onSelectCategory={setSelectedCategoryID} />
+      {!selectedCategory ? (
+        <Categories onSelectCategory={(id, name) => setSelectedCategory({ id, name })} />
       ) : !selectedQuestionID ? (
         <QuestionList
-          categoryID={selectedCategoryID}
+          categoryID={selectedCategory.id}
+          categoryName={selectedCategory.name} 
           onSelectQuestion={setSelectedQuestionID}
         />
       ) : (

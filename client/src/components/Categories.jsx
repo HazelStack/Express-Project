@@ -29,7 +29,7 @@ export default function Categories({ onSelectCategory }) {
           <div
             key={cat.categoryID}
             className="category-card"
-            onClick={() => onSelectCategory(cat.categoryID)}
+            onClick={() => onSelectCategory(cat.categoryID, cat.name)} // ✅ pass both ID and name
           >
             <img src={getCategoryImage(cat.name)} alt={cat.name} />
             <div className="category-overlay">
