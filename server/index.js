@@ -3,9 +3,13 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+// Routers
 import usersRouter from "./Routers/usersRouter.js";
 import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
+
+// DB connection (Postgres)
+import "./db.js";
 
 const server = express();
 const PORT = process.env.PORT || 4000;
@@ -13,21 +17,24 @@ const PORT = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Middleware
 server.use(cors());
 server.use(express.json());
 
-
+// API routes
 server.use("/api/users", usersRouter);
 server.use("/api/questions", questionsRouter);
 server.use("/api/categories", categoriesRouter);
 
-
+// Serve React build
 server.use(express.static(path.join(__dirname, "client/build")));
 
-server.get("*", (req, res) => {
+// Wildcard route for React Router (Express 5 fix)
+server.get("/:path(*)", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
+// Start server
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
