@@ -1,26 +1,20 @@
-// https://www.w3schools.com/nodejs/nodejs_mysql.asp?utm_source=chatgpt.com
+import { Pool } from "pg";
 
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT || 5432,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
-// Load environment variables from .env
-dotenv.config();
+pool.connect()
+  .then(() => console.log("✅ Connected to PostgreSQL"))
+  .catch(err => console.error("❌ Error connecting to DB:", err));
 
-let db;
-
-try {
-  db = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-  });
-
-  console.log("✅ Connected to MySQL");
-} catch (error) {
-  console.error("❌ Error connecting to DB:", error.message);
-}
-
-export default db;
+export default pool;
 
 
