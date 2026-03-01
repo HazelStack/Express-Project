@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import usersRouter from "./Routers/usersRouter.js";
 import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
+import seedRouter from "./seedsRouter.js";
 
 // DB connection (Postgres)
 import "./dbConnection.js";
@@ -26,6 +27,7 @@ server.use(express.json());
 server.use("/api/users", usersRouter);
 server.use("/api/questions", questionsRouter);
 server.use("/api/categories", categoriesRouter);
+server.use("/api", seedRouter);
 
 // Serve React build
 server.use(express.static(path.join(__dirname, "../client/build")));
