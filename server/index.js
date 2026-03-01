@@ -8,6 +8,7 @@ import usersRouter from "./Routers/usersRouter.js";
 import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
 import seedRouter from "./seedRouter.js"; 
+import seedQuestionsRouter from "./seedQuestions.js";
 
 // DB connection (Postgres)
 import "./dbConnection.js";
@@ -28,6 +29,7 @@ server.use("/api/users", usersRouter);
 server.use("/api/questions", questionsRouter);
 server.use("/api/categories", categoriesRouter);
 server.use("/api", seedRouter);
+server.use("/api", seedQuestionsRouter);
 
 // Serve React build
 server.use(express.static(path.join(__dirname, "../client/build")));
