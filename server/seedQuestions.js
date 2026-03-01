@@ -5,12 +5,31 @@ const seedQuestionsRouter = express.Router();
 
 seedQuestionsRouter.get("/seed-questions", async (req, res) => {
   try {
-    // Replace userID with your registered user’s ID on the live database
-    const questions = [
-      { title: "Best indoor plants for low light?", userID: 1, categoryID: 1 },
-      { title: "How often should I water outdoor plants?", userID: 1, categoryID: 2 },
-      { title: "Which plants are safe for cats and dogs?", userID: 1, categoryID: 3 },
-    ];
+   const questions = [
+  // Indoor plants
+  { title: "Best indoor plants for low light?", userID: 1, categoryID: 1 },
+  { title: "How to fertilize indoor plants?", userID: 1, categoryID: 1 },
+  { title: "Best pots for indoor plants?", userID: 1, categoryID: 1 },
+  { title: "Indoor plant pests: how to deal?", userID: 1, categoryID: 1 },
+  { title: "Air-purifying indoor plants?", userID: 1, categoryID: 1 },
+  { title: "How often to water indoor plants?", userID: 1, categoryID: 1 },
+
+  // Outdoor plants
+  { title: "Best outdoor plants for shade?", userID: 1, categoryID: 2 },
+  { title: "How often to water outdoor garden?", userID: 1, categoryID: 2 },
+  { title: "Outdoor plant soil tips?", userID: 1, categoryID: 2 },
+  { title: "Preventing outdoor plant pests?", userID: 1, categoryID: 2 },
+  { title: "Seasonal outdoor plants?", userID: 1, categoryID: 2 },
+  { title: "Fertilizers for outdoor plants?", userID: 1, categoryID: 2 },
+
+  // Pet friendly plants
+  { title: "Plants safe for cats?", userID: 1, categoryID: 3 },
+  { title: "Plants safe for dogs?", userID: 1, categoryID: 3 },
+  { title: "Pet-friendly plants for indoors?", userID: 1, categoryID: 3 },
+  { title: "Avoiding toxic plants for pets?", userID: 1, categoryID: 3 },
+  { title: "Pet safe flowering plants?", userID: 1, categoryID: 3 },
+  { title: "Pet safe succulents?", userID: 1, categoryID: 3 },
+];
 
     for (const q of questions) {
       await db.query(
