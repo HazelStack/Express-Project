@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f91879c5.css",
+    "main.js": "/static/js/main.aa70de48.js",
+    "static/media/background-auth.jpg": "/static/media/background-auth.22c28e93196be1a65349.jpg",
+    "static/media/pet-plant.jpg": "/static/media/pet-plant.61ddd69ff162a82f7b10.jpg",
+    "static/media/plant.jpg": "/static/media/plant.96d2d855cf75e4d2b2bd.jpg",
+    "static/media/indoor-plant.jpg": "/static/media/indoor-plant.8dca2d594364995c78e5.jpg",
+    "static/media/outdoor-plant.jpg": "/static/media/outdoor-plant.28a01c31c29fe2e37e06.jpg",
+    "index.html": "/index.html",
+    "main.f91879c5.css.map": "/static/css/main.f91879c5.css.map",
+    "main.aa70de48.js.map": "/static/js/main.aa70de48.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f91879c5.css",
+    "static/js/main.aa70de48.js"
+  ]
+}
