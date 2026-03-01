@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "/api"; // ← fixed for deployed site
+const API_BASE = "https://botanical-qanda.onrender.com/api";
 
 export async function getQuestionsByCategory(categoryID) {
   const res = await axios.get(`${API_BASE}/questions/category/${categoryID}`);
