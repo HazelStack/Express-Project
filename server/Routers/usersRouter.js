@@ -8,16 +8,16 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const [rows] = await db.query(
-      "SELECT userID, username, email FROM users WHERE username = ? AND password = ?",
+    const result = await db.query(
+      "SELECT \"userID\", username, email FROM users WHERE username = $1 AND password = $2",
       [username, password]
     );
 
-    if (rows.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    res.json(rows[0]);
+    res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -33,23 +33,22 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ message: "Missing fields" });
     }
 
-    // Check if user exists
-    const [existing] = await db.query(
-      "SELECT userID FROM users WHERE username = ?",
+    const existing = await db.query(
+      "SELECT \"userID\" FROM users WHERE username = $1",
       [username]
     );
 
-    if (existing.length > 0) {
+    if (existing.rows.length > 0) {
       return res.status(400).json({ message: "Username already exists" });
     }
 
-    const [result] = await db.query(
-      "INSERT INTO users (username, password, email) VALUES (?, ?, ?)",
+    const result = await db.query(
+      "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING \"userID\"",
       [username, password, email || null]
     );
 
     res.status(201).json({
-      userID: result.insertId,
+      userID: result.rows[0].userID,
       username,
       email: email || null,
     });

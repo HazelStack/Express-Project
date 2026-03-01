@@ -6,68 +6,72 @@ const router = express.Router();
 // GET all questions
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await db.query(`
+    const result = await db.query(`
       SELECT 
-        q.questionID,
+        q."questionID",
         q.title,
         u.username,
         c.name AS category
       FROM questions q
-      JOIN users u ON q.userID = u.userID
-      JOIN categories c ON q.categoryID = c.categoryID
-      ORDER BY q.questionID DESC
+      JOIN users u ON q."userID" = u."userID"
+      JOIN categories c ON q."categoryID" = c."categoryID"
+      ORDER BY q."questionID" DESC
     `);
 
-    res.json(rows);
+    res.json(result.rows);
 
   } catch (error) {
     console.error("Query error:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
 // GET single question with its answers
 router.get("/:id", async (req, res) => {
   try {
     const questionID = req.params.id;
 
-    // 1️⃣ Get the question
-    const [questionRows] = await db.query(`
+    const questionResult = await db.query(`
       SELECT 
-        q.questionID,
+        q."questionID",
         q.title,
         u.username,
         c.name AS category
       FROM questions q
-      JOIN users u ON q.userID = u.userID
-      JOIN categories c ON q.categoryID = c.categoryID
-      WHERE q.questionID = ?
+      JOIN users u ON q."userID" = u."userID"
+      JOIN categories c ON q."categoryID" = c."categoryID"
+      WHERE q."questionID" = $1
     `, [questionID]);
 
-    if (questionRows.length === 0) {
+    if (questionResult.rows.length === 0) {
       return res.status(404).json({ message: "Question not found" });
     }
 
-    // 2️⃣ Get answers for that question
-    const [answerRows] = await db.query(`
+    const answerResult = await db.query(`
       SELECT 
-        a.answerID,
+        a."answerID",
         a.content,
         u.username
       FROM answers a
-      JOIN users u ON a.userID = u.userID
-      WHERE a.questionID = ?
-      ORDER BY a.answerID ASC
+      JOIN users u ON a."userID" = u."userID"
+      WHERE a."questionID" = $1
+      ORDER BY a."answerID" ASC
     `, [questionID]);
 
-    // 3️⃣ Send combined response
-    res.json({ ...questionRows[0], answers: answerRows })
+    res.json({
+      ...questionResult.rows[0],
+      answers: answerResult.rows
+    });
 
   } catch (error) {
     console.error("Error fetching question:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
-// POST an answer to a specific question
+
+
+// POST an answer
 router.post("/:id/answers", async (req, res) => {
   try {
     const questionID = req.params.id;
@@ -77,15 +81,16 @@ router.post("/:id/answers", async (req, res) => {
       return res.status(400).json({ message: "Missing content or userID" });
     }
 
-    // Insert answer into the database
-    const [result] = await db.query(
-      "INSERT INTO answers (content, questionID, userID) VALUES (?, ?, ?)",
+    const result = await db.query(
+      `INSERT INTO answers (content, "questionID", "userID") 
+       VALUES ($1, $2, $3)
+       RETURNING "answerID"`,
       [content, questionID, userID]
     );
 
     res.status(201).json({
       message: "Answer added successfully",
-      answerID: result.insertId
+      answerID: result.rows[0].answerID
     });
 
   } catch (error) {
@@ -93,29 +98,32 @@ router.post("/:id/answers", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-// GET /questions/category/:categoryID
+
+
+// GET questions by category
 router.get("/category/:categoryID", async (req, res) => {
   try {
     const categoryID = req.params.categoryID;
 
-    const [rows] = await db.query(
-      `SELECT 
-         q.questionID,
-         q.title,
-         u.username,
-         c.name AS category
-       FROM questions q
-       JOIN users u ON q.userID = u.userID
-       JOIN categories c ON q.categoryID = c.categoryID
-       WHERE q.categoryID = ?
-       ORDER BY q.questionID DESC`,
-      [categoryID]
-    );
+    const result = await db.query(`
+      SELECT 
+        q."questionID",
+        q.title,
+        u.username,
+        c.name AS category
+      FROM questions q
+      JOIN users u ON q."userID" = u."userID"
+      JOIN categories c ON q."categoryID" = c."categoryID"
+      WHERE q."categoryID" = $1
+      ORDER BY q."questionID" DESC
+    `, [categoryID]);
 
-    res.json(rows);
+    res.json(result.rows);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 export default router;

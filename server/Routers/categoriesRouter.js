@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM categories");
-    res.json(rows);
+    const result = await db.query("SELECT * FROM categories");
+    res.json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
