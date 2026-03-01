@@ -9,7 +9,7 @@ import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
 
 // DB connection (Postgres)
-import "./dbConnection.js";  
+import "./dbConnection.js"; 
 
 const server = express();
 const PORT = process.env.PORT || 4000;
@@ -29,8 +29,8 @@ server.use("/api/categories", categoriesRouter);
 // Serve React build
 server.use(express.static(path.join(__dirname, "client/build")));
 
-// Wildcard route for React Router (Express 5 fix)
-server.get("/:path(*)", (req, res) => {
+// Catch-all route (Express 5 compatible)
+server.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
