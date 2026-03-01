@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 import usersRouter from "./Routers/usersRouter.js";
 import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
-import seedRouter from "./seedsRouter.js";
+import seedRouter from "./seedRouter.js"; 
 
 // DB connection (Postgres)
 import "./dbConnection.js";
