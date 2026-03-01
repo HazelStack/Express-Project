@@ -30,6 +30,21 @@ Botanical Q&A is an interactive web application designed for plant enthusiasts t
 
 3. **As a returning user**, I want to log in and quickly see the categories I follow, so that I can stay engaged and track discussions without having to search manually.
 
+## Wireframes
+
+Here’s a visual overview of the app layout:
+
+### Login / Register Page
+![Login Wireframe](./client/src/images/Login.drawio.svg)
+![Register Wireframe](./client/src/images/Register.drawio.svg)
+
+### Dashboard 
+![Dashboard Wireframe](./client/src/images/Dashboard.drawio.svg)
+
+### Question & Answer Page
+![Question Page Wireframe](.client/src/images/Questions.drawio.svg)
+![Answer Page Wireframe](./client/src/images/Answers.drawio.svg)
+
 ## Database Schema (MySQL)
 
 The application uses four primary relational tables:
