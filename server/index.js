@@ -9,11 +9,12 @@ import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
 
 // DB connection (Postgres)
-import "./dbConnection.js"; 
+import "./dbConnection.js";
 
 const server = express();
 const PORT = process.env.PORT || 4000;
 
+// __dirname setup for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -27,11 +28,11 @@ server.use("/api/questions", questionsRouter);
 server.use("/api/categories", categoriesRouter);
 
 // Serve React build
-server.use(express.static(path.join(__dirname, "client/build")));
+server.use(express.static(path.join(__dirname, "../client/build")));
 
-// Catch-all route (Express 5 compatible)
+// Catch-all route for React
 server.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 // Start server
