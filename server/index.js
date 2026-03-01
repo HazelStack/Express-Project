@@ -9,7 +9,7 @@ import questionsRouter from "./Routers/questionsRouter.js";
 import categoriesRouter from "./Routers/categoriesRouter.js";
 
 // DB connection (Postgres)
-import "./db.js";
+import "./dbConnection.js";  
 
 const server = express();
 const PORT = process.env.PORT || 4000;
