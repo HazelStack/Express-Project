@@ -1,12 +1,5 @@
-## Application Architecture
-
-This project follows a full-stack architecture:
-
-- **Frontend:** React (Client)
-- **Backend:** Express + Node.js (Server)
-- **Database:** MySQL (Relational)
-
-The Express API processes HTTP requests from the React frontend, performing CRUD operations on a MySQL database where foreign key constraints enforce referential integrity across tables.
+## App Overview
+Botanical Q&A is an interactive web application designed for plant enthusiasts to ask, answer, and explore questions about indoor, outdoor, and pet-friendly plants. Users can create accounts, browse categorized plant topics, post questions, and contribute answers to help others in the community. The platform features a responsive, botanical-themed interface with a cohesive design, including category-specific visuals and a clean layout for reading and posting content. Built with a React frontend and Express/MySQL backend, the app emphasizes community knowledge sharing while maintaining a visually inviting experience that reflects the natural beauty of plants.
 
 ## Database Schema (MySQL)
 
@@ -18,7 +11,7 @@ The application uses four primary relational tables:
 - `answers`
 
 ### Users Table
-
+```
 CREATE TABLE `users` (
   `userID` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
@@ -26,18 +19,20 @@ CREATE TABLE `users` (
   `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
 
 ### Categories Table
-
+```
 CREATE TABLE `categories` (
   `categoryID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
 
 ### Questions Table
-
+```
 CREATE TABLE `questions` (
   `questionID` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
@@ -51,8 +46,10 @@ CREATE TABLE `questions` (
   CONSTRAINT `questions_ibfk_2`
     FOREIGN KEY (`categoryID`) REFERENCES `categories` (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
 
 ### Answers Table
+```
 CREATE TABLE `answers` (
   `answerID` int NOT NULL AUTO_INCREMENT,
   `content` text NOT NULL,
@@ -66,3 +63,4 @@ CREATE TABLE `answers` (
   CONSTRAINT `answers_ibfk_2`
     FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
