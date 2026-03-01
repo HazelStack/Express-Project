@@ -30,7 +30,7 @@ server.use("/api/categories", categoriesRouter);
 server.use(express.static(path.join(__dirname, "client/build")));
 
 // Catch-all route (Express 5 compatible)
-server.get("*", (req, res) => {
+server.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
