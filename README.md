@@ -36,6 +36,7 @@ Here’s a visual overview of the app layout:
 
 ### Login / Register Page
 ![Login Wireframe](./client/src/images/Login.drawio.svg)
+
 ![Register Wireframe](./client/src/images/Register.drawio.svg)
 
 ### Dashboard 
@@ -43,7 +44,32 @@ Here’s a visual overview of the app layout:
 
 ### Question & Answer Page
 ![Question Page Wireframe](.client/src/images/Questions.drawio.svg)
+
 ![Answer Page Wireframe](./client/src/images/Answers.drawio.svg)
+
+## Screenshots
+
+### Login / Register Page
+![Login Desktop Version](./client/src/images/Home(Desktop).jpg)
+
+![Register Mobile Version](./client/src/images/Register(Mobile).jpg)
+
+### Dashboard
+![Dashboard Desktop Version](./client/src/images/Dashboard(Desktop).jpg)
+
+### Question & Answer Page
+![Question Desktop Version](./client/src/images/Questions(Desktop).jpg)
+
+![Answer Mobile Version](./client/src/images/Answers(Mobile).jpg)
+
+## Future Improvements
+
+- **Secure Authentication System** – Implement password hashing (bcrypt), JWT-based authentication, and protected API routes to enhance application security.
+
+- **Upvote & Reputation System** – Add voting functionality to highlight high-quality answers and introduce a reputation system to encourage community engagement.
+
+- **Search & Advanced Filtering** – Build dynamic search and filtering capabilities so users can quickly find questions by keywords, category, or popularity.
+
 
 ## Database Schema (MySQL)
 
@@ -109,3 +135,4 @@ CREATE TABLE `answers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 ```
 
+**Developer:** [Hazel Arevalo](https://www.linkedin.com/in/harevalo123)
