@@ -30,6 +30,11 @@ Botanical Q&A is an interactive web application designed for plant enthusiasts t
 
 3. **As a returning user**, I want to log in and quickly see the categories I follow, so that I can stay engaged and track discussions without having to search manually.
 
+## Live Demo
+
+Check out the live version of the Botanical Q&A site here:  
+[https://botanical-qanda.onrender.com](https://botanical-qanda.onrender.com)
+
 ## Wireframes
 
 Here’s a visual overview of the app layout:
