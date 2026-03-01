@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import plantLogo from "../images/plant.jpg";
+import Footer from "../components/Footer"
 
 export default function Layout({ user, onLogout, onHome, children }) {
   return (
@@ -32,6 +33,7 @@ export default function Layout({ user, onLogout, onHome, children }) {
         <Container className="mt-4">
           {children}
         </Container>
+        <Footer />
       </div>
     </>
   );
