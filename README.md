@@ -7,29 +7,29 @@ Designed with a cohesive botanical theme, the interface combines curated imagery
 
 ## Set Up and Installation:
   1. Clone the Repository
-    ○ git clone https://github.com/HazelStack/Express-Project.git
-    ○ cd Express-Project 
+    - git clone https://github.com/HazelStack/Express-Project.git
+    - cd Express-Project 
   2. Install server dependencies
-    ○ cd server
-    ○ npm install
+    - cd server
+    - npm install
   3. Install client dependencies
-    ○ cd ../client
-    ○ npm install
+    - cd ../client
+    - npm install
   4. Set Up PostgresSQL Database
-    ○ Make sure PostgreSQL is installed and running
-    ○ Create a database: createdb botanical_qanda OR
+    - Make sure PostgreSQL is installed and running
+    - Create a database: createdb botanical_qanda OR
       - Inside psql: CREATE DATABASE botanical_qanda;
   5. Configure Environment Variables
-    ○ Inside your server folder, create a .env file:
+    - Inside your server folder, create a .env file:
     DATABASE_URL=postgres://YOUR_USERNAME:YOUR_PASSWORD@localhost:5432/botanical_qanda
     JWT_SECRET=your_secret_key
     PORT=5000
-    ○ Replace 
+    - Replace 
       - YOUR_USERNAME
       - YOUR_PASSWORD
-    ○ With your local PostgreSQL credentials
+    - With your local PostgreSQL credentials
   6. Create Tables
-    ○ Users Table
+    - Users Table
   ```
   CREATE TABLE users (
     userID SERIAL PRIMARY KEY,
@@ -40,7 +40,7 @@ Designed with a cohesive botanical theme, the interface combines curated imagery
   );
   ```
   
-    ○ Categories Table
+    - Categories Table
   ```
   CREATE TABLE categories (
     categoryID SERIAL PRIMARY KEY,
@@ -49,7 +49,7 @@ Designed with a cohesive botanical theme, the interface combines curated imagery
   );
   ```
   
-    ○ Questions Table
+    - Questions Table
   ```
   CREATE TABLE questions (
     questionID SERIAL PRIMARY KEY,
@@ -60,7 +60,7 @@ Designed with a cohesive botanical theme, the interface combines curated imagery
   );
   ```
   
-    ○ Answers Table
+    - Answers Table
   ```
   CREATE TABLE answers (
     answerID SERIAL PRIMARY KEY,
@@ -72,17 +72,17 @@ Designed with a cohesive botanical theme, the interface combines curated imagery
   ```
     
   7. Start the Backend Server
-    ○ Inside the server folder
+    - Inside the server folder
       - npm run dev
-    ○ Or 
+    - Or 
       - node index.js
-    ○ Backend should run on:
+    - Backend should run on:
       - http://localhost:5000
   8. Start the Frontend
-    ○ In a new terminal:
+    - In a new terminal:
       - cd client
       - npm start
-    ○ Frontend should open at:
+    - Frontend should open at:
       - http://localhost:3000
 
 ## Features
